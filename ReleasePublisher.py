@@ -79,10 +79,10 @@ exclude = ['app.publish',
 def createZip():
     print('** CREATE ZIP **')
     with zipfile.ZipFile(dest_path+'\\'+app_version+'.zip', 'w', zipfile.ZIP_DEFLATED) as zipObj:
-        for dirpath, dirnames, filenames in os.walk(source_path):
-            for filename in filenames:
-                path = Path((dirpath[(dirpath.__len__() - trim_size) * -1:])).parts
-                if path[1] not in exclude:
+        for dirpath, _, filenames in os.walk(source_path):
+            path = Path((dirpath[(dirpath.__len__() - trim_size) * -1:])).parts
+            if path[1] not in exclude:
+                for filename in filenames:
                     if filename not in exclude:
                         fullname = os.path.join(dirpath, filename)
                         zipObj.write(fullname, fullname[(fullname.__len__() - trim_size) * -1:])
